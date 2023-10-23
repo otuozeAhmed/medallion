@@ -23,11 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'zf!n2f18#a6=-^)rkpk!rn=h$8-x6ja$6-oqxlsph++*_qg4+m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*', 'bny-l-2111', 'phc-d-0644', 'https://web-production-247ce.up.railway.app']
-if not DEBUG:
-    CSRF_TRUSTED_ORIGINS = ['https://web-production-247ce.up.railway.app']
+ALLOWED_HOSTS = ['*', 'bny-l-2111', 'phc-d-0644', 'https://web-production-247ce.up.railway.app', 'http://web-production-247ce.up.railway.app']
+
+CSRF_TRUSTED_ORIGINS = ['https://web-production-247ce.up.railway.app','http://web-production-247ce.up.railway.app']
 
 # Application definition
 
