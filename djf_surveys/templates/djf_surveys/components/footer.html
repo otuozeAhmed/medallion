@@ -1,0 +1,63 @@
+<!doctype html>
+{% load i18n static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans "Nomination | Portal" %}</title>
+    <link rel="stylesheet" href="{% static 'djf_surveys/css/ratings.css' %}">
+    <link rel="stylesheet" href="{% static 'djf_surveys/css/rating.css' %}">
+    <script src="{% static 'djf_surveys/css/tailwindcss-3.3.1.js' %}"></script>
+    <script src="{% static 'djf_surveys/css/tailwindcss-plugin-3.3.1.js' %}"></script>
+    {% block extra_css %}{% endblock %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+
+	
+	<!-- Fonts and icons --> 
+	<script src="/static/js/plugin/webfont/webfont.min.js"></script>
+	<script>
+		WebFont.load({
+			google: {"families":["Lato:300,400,700,900"]},
+			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['/static/css/fonts.min.css']},
+			active: function() {
+				sessionStorage.fonts = true;
+			}
+		});
+	</script>
+</head>
+
+<body>
+    
+
+
+    <footer class="fixed bottom-0 w-full bg-gray-900 text-white py-1 inset-x-0">
+        <marquee direction="left" scrollamount="5" scrolldelay="1">
+            COPYRIGHT NLNG Bonny Location Medallion Award 2023
+    
+            *** 1. Welcome to the nomination portal of the Annual Bonny Location Medallion Award.
+    
+            ***  2. Only logged in users are allowed to cast their nomination.
+    
+            ***  3. Proceed to register a user account if you're a first time user.
+    
+            ***  4. Only NLNG & RA School mail are allowed during registration.
+    
+            ***  5. Unique Staff ID is also required during registration.
+    
+            ***  6. Your password can be any 4 characters minimum and above
+    
+            ***  7. On the "Home Page" click "Get Started" to proceed to the nomination portal.
+    
+            ***  8. Use the two buttons on every card to nominate and edit your nomination respectively.
+    
+            ***  9. The nomination button is "red" before nomination and turns "green" after your nomination.
+
+            ***  10. Kindly click the "Next" button or use the page number to navigate through the poll.
+        </marquee>
+    </footer>
+    
+
+</body>

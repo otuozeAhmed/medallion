@@ -1,0 +1,46 @@
+{% extends get_master_template %}
+{% load djf_survey_tags static %}
+{% load i18n static %}
+
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'djf_surveys/te-starter/css/tw-elements.min.css' %}">
+    <link rel="stylesheet" href="{% static 'djf_surveys/css/rating.css' %}"/>
+{% endblock %}
+
+{% block content %}
+
+{% include 'djf_surveys/components/header_nav.html' %}
+
+    <div class="max-w-screen-xl px-4 py-0 mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-lg mx-auto">
+            <h2 class="text-2xl font-bold text-center text-blue-100 sm:text-3xl mb-3">
+                {% trans "Your Nomination" %} - {{ object.name }}
+            </h2>
+        </div>
+  
+
+        {% if page_obj %}
+            <div class="max-w-lg mx-auto">
+                {% for object in page_obj %}
+                    {% include 'djf_surveys/components/card_list_answer.html' %}
+                {% endfor %}
+            </div>
+            <div class="py-10">
+                {% include 'djf_surveys/components/pagination.html' %}
+            </div>
+        {% else %}
+            {% include 'djf_surveys/components/empty_state.html' %}
+        {% endif %}
+    </div>
+    
+    {% include 'djf_surveys/components/modal_delete.html' %}
+    
+{% endblock %}
+{% include 'djf_surveys/components/footer.html' %}
+
+{% block extra_js %}
+    <script src="{% static 'djf_surveys/te-starter/js/tw-elements.umd.min.js' %}"></script>
+    {% include 'djf_surveys/components/modal_delete_js.html' %}
+    {% include 'djf_surveys/components/share_link_button_js.html' %}
+{% endblock %}

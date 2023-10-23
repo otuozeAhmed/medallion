@@ -1,0 +1,59 @@
+
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up Page for Medallion Award</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="{% static 'customuser/fonts/material-icon/css/material-design-iconic-font.min.css' %}">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="{% static 'customuser/css/style.css' %}">
+</head>
+<body>
+
+    <div class="main">
+
+        <!-- Sing in Form -->
+        <section class="sign-in">
+            <div class="container">
+                <div class="signin-content">
+                    <div class="signin-image">
+                        <figure><img src="{% static 'customuser/images/ttt.png' %}" alt="sing up image">
+                            <p>Not yet registered on the nomination portal?</p>
+                            <a href="{% url 'register' %}" class="signup-image-link">Create an account</a></figure>
+                        
+                    </div>
+
+                    <div class="signin-form">
+                        <h2 class="form-title"><p>Enter the 6-digit OTP sent to your email address to verify your account.</p></h2>
+                        <form method="POST" class="register-form">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="otp"><i class="zmdi zmdi-key material-icons-name"></i></label>
+                                <input type="text" name="otp" id="otp" placeholder="Enter OTP"/>
+                            </div>
+                            
+                            <div class="form-group form-button">
+                                <input type="submit" class="form-submit" value="Verify OTP"/>
+                            </div>
+                        </form>
+                        <p>Didn't receive the OTP? <a href="{% url 'resend-otp' %}">Resend OTP</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- JS -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

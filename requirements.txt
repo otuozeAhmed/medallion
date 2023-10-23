@@ -1,0 +1,8 @@
+Django==4.1.7
+setuptools==65.5.1
+twine==4.0.1
+black==22.10.0
+waitress==2.1.2
+whitenoise==6.4.0
+django-jazzmin==2.6.0
+gunicorn==21.2.0
