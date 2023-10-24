@@ -1,3 +1,5 @@
+import re
+
 from django.template import Library
 from djf_surveys.utils import create_star as utils_create_star
 register = Library()
@@ -17,3 +19,16 @@ def get_id_field(field):
 @register.filter(name='create_star')
 def create_star(number, args):
     return utils_create_star(active_star=int(number), id_element=args)
+
+@register.filter(name='truncate_email')
+def truncate_email(email):
+    email = str(email)  
+    pattern = r'^([^@]+)@.*$'
+    match = re.match(pattern, email)
+    
+    if match:
+        truncated_email = match.group(1)
+        return truncated_email
+    
+    # Return the original email if it doesn't match the pattern
+    return email

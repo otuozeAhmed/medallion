@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.shortcuts import redirect, get_object_or_404, render
 from django.contrib import messages
+from customuser.models import CustomUser
 
 from djf_surveys.models import Survey, UserAnswer
 from djf_surveys.forms import CreateSurveyForm, EditSurveyForm
