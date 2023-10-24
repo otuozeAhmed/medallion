@@ -25,9 +25,9 @@ SECRET_KEY = 'zf!n2f18#a6=-^)rkpk!rn=h$8-x6ja$6-oqxlsph++*_qg4+m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', 'bny-l-2111', 'phc-d-0644', 'https://medallion-award.up.railway.app', 'http://medallion-award.up.railway.app']
+ALLOWED_HOSTS = ['*', 'bny-l-2111', 'phc-d-0644', 'https://medallion-awards.up.railway.app', 'http://medallion-awards.up.railway.app']
 
-CSRF_TRUSTED_ORIGINS = ['https://medallion-award.up.railway.app','http://medallion-award.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://medallion-awards.up.railway.app','http://medallion-awards.up.railway.app']
 
 # Application definition
 
