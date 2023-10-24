@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'djf_surveys',
     'demo',
     'customuser',
+    'import_export',
 ]
 
 MIDDLEWARE = [

@@ -2,6 +2,7 @@ from django.http import Http404
 from django.urls import reverse_lazy, reverse
 from django.utils.text import capfirst
 from django.utils.translation import gettext, gettext_lazy as _
+from django.views import View
 from django.views.generic.list import ListView
 from django.views.generic.edit import FormMixin
 from django.views.generic.detail import DetailView
@@ -9,9 +10,13 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.shortcuts import redirect, get_object_or_404, render
 from django.contrib import messages
-from customuser.models import CustomUser
+from django.core.cache import cache
+from django.db.models import Q
+from django.db.models import Count
 
-from djf_surveys.models import Survey, UserAnswer
+import pandas as pd
+
+from djf_surveys.models import Question, Survey, UserAnswer, Answer
 from djf_surveys.forms import CreateSurveyForm, EditSurveyForm
 from djf_surveys.mixin import ContextTitleMixin
 from djf_surveys import app_settings
@@ -240,3 +245,150 @@ def home(request):
 
 def redirect_error_page(request):
     return redirect('djf_surveys:home')
+
+
+
+
+
+class AnswersPage(View):
+    def __init__(self):
+        self.result = cache.get('self.result')
+        if self.result is None:
+            self.result = pd.DataFrame.from_records(list(Answer.objects.select_related('question', 'user_answer').values(
+                'question__survey__name', 'question__label', 'value', 'user_answer__user__full_name',
+                'user_answer__user__email', 'user_answer__user__department', 'user_answer__user__unit',
+                    'user_answer__user__staff_id')))
+            cache.set('self.result', self.result, 300)
+        
+        self.most_collaborative_unit = self.result.loc[self.result['question__survey__name'].str.contains(
+            'Most Collaborative Unit of the Year Award', regex=False
+        )]
+
+        self.ci_award = self.result.loc[self.result['question__survey__name'].str.contains(
+            'The CI Award', regex=False
+        )]
+
+        self.manager_of_the_year = self.result.loc[self.result['question__survey__name'].str.contains(
+            'Manager of the Year Award', regex=False
+        )]
+
+        self.inspirational_mentor = self.result.loc[self.result['question__survey__name'].str.contains(
+            'Most Inspirational Mentor Award', regex=False
+        )]
+
+        self.got_ya_back = self.result.loc[self.result['question__survey__name'].str.contains(
+            "The 'I Got Ya Back' Award", regex=False
+        )]
+
+        self.most_innovative = self.result.loc[self.result['question__survey__name'].str.contains(
+            "Most Innovative Award", regex=False
+        )]
+
+        self.sustainability_award = self.result.loc[self.result['question__survey__name'].str.contains(
+            "Sustainability Award", regex=False
+        )]
+
+        self.mr_integrity = self.result.loc[self.result['question__survey__name'].str.contains(
+            "Mr/Mrs Integrity", regex=False
+        )]
+
+        self.enterprise_first = self.result.loc[self.result['question__survey__name'].str.contains(
+            "Enterprise First Award", regex=False
+        )]
+
+        self.pm_partner = self.result.loc[self.result['question__survey__name'].str.contains(
+            "PM Partner of the Year Award", regex=False
+        )]
+
+        self.pi_partner = self.result.loc[self.result['question__survey__name'].str.contains(
+            "PI Partner of the Year Award", regex=False
+        )]
+
+        self.ps_pg_partner = self.result.loc[self.result['question__survey__name'].str.contains(
+            "PS/PG Partner of the Year", regex=False
+        )]
+
+        self.pt_partner = self.result.loc[self.result['question__survey__name'].str.contains(
+            "PT Partner of the Year", regex=False
+        )]
+
+        self.pc_partner = self.result.loc[self.result['question__survey__name'].str.contains(
+            "PC Partner of the Year", regex=False
+        )]
+
+        self.operations_partner = self.result.loc[self.result['question__survey__name'].str.contains(
+            "Operations Partner of the Year Award", regex=False
+        )]
+
+        self.hse_partner = self.result.loc[self.result['question__survey__name'].str.contains(
+            "HSE Partner of the Year", regex=False
+        )]
+
+        self.medical_partner = self.result.loc[self.result['question__survey__name'].str.contains(
+            "Medical Partner of the Year Award", regex=False
+        )]
+
+        self.esd_partner = self.result.loc[self.result['question__survey__name'].str.contains(
+            "ESD Partner of the Year Award", regex=False
+        )]
+
+        self.tp_partner = self.result.loc[self.result['question__survey__name'].str.contains(
+            "TP Partner of the Year Award", regex=False
+        )]
+
+        self.te_partner = self.result.loc[self.result['question__survey__name'].str.contains(
+            "TE Partner of the Year Award", regex=False
+        )]
+
+        self.ti_tf_partner = self.result.loc[self.result['question__survey__name'].str.contains(
+            "TI/TF Partner of the Year Award", regex=False
+        )]
+
+        self.imt_partner = self.result.loc[self.result['question__survey__name'].str.contains(
+            "IMT Partner of the Year", regex=False
+        )]
+
+        self.css_partner = self.result.loc[self.result['question__survey__name'].str.contains(
+            "CSS Partner of the Year Award", regex=False
+        )]
+
+        self.teacher_core_partner = self.result.loc[self.result['question__survey__name'].str.contains(
+            "RAIS core staff of the Year", regex=False
+        )]
+
+        self.lss_partner = self.result.loc[self.result['question__survey__name'].str.contains(
+            "LSS Partner of the Year", regex=False
+        )]
+
+        self.cpm_partner = self.result.loc[self.result['question__survey__name'].str.contains(
+            "CPM Partner of the Year Award", regex=False
+        )]
+
+        self.hygiene = self.result.loc[self.result['question__survey__name'].str.contains(
+            "Hygiene Excellence", regex=False
+        )]
+
+        self.rais_support_partner = self.result.loc[self.result['question__survey__name'].str.contains(
+            "RAIS support (partner) staff of the Year", regex=False
+        )]
+
+
+    def get(self, request):
+        context = {
+            'most_collaborative': self.most_collaborative_unit, 'ci_award': self.ci_award,
+            'manager_of_the_year': self.manager_of_the_year, 'inspirational_mentor':self.inspirational_mentor,
+            'got_ya_back': self.got_ya_back, 'most_innovative': self.most_innovative,
+            'sustainability_award': self.sustainability_award, 'mr_integrity': self.mr_integrity,
+            'enterprise_first': self.enterprise_first, 'pm_partner': self.pm_partner,
+            'pi_partner': self.pi_partner, 'pi_pg_partner': self.ps_pg_partner,
+            'pc_partner': self.pc_partner, 'pt_partner': self.pt_partner, 'operations_partner': self.operations_partner,
+            'hse_partner': self.hse_partner, 'medical_partner': self.medical_partner, 'esd_partner': self.esd_partner,
+            'tp_partner': self.tp_partner, 'tf_partner': self.te_partner, 'ti_tf_partner': self.ti_tf_partner,
+            'imt_partner': self.imt_partner, 'css_partner':self.css_partner, 'teacher_core_partner': self.teacher_core_partner,
+            'lss_partner': self.lss_partner, 'cpm_partner': self.cpm_partner, 'hygiene': self.hygiene,
+            'rais_support_partner': self.rais_support_partner
+
+    
+        }
+        return render(request, 'djf_surveys/survey_result.html', context)
+

@@ -13,5 +13,6 @@ urlpatterns = [
     path('share/<str:slug>/', views.share_link, name='share_link'),
     path(SURVEYS_ADMIN_BASE_PATH, include('djf_surveys.admins.urls')),
     path('welcome/', views.home, name='home'),
+    path('result/', views.AnswersPage.as_view(), name='answer'),
     re_path(r'.*', views.redirect_error_page, name='redirect'),
 ]
